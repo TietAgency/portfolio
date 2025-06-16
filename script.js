@@ -56,7 +56,7 @@ window.addEventListener('scroll', scrollActive);
 
 // ===== SCROLL REVEAL ANIMATIONS ===== 
 function animateOnScroll() {
-    const animateElements = document.querySelectorAll('.trabalho__card, .criativo__item, .servico__card, .cliente__item');
+    const animateElements = document.querySelectorAll('.behance__project, .servico__card, .cliente__item');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -96,28 +96,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== VIDEO LAZY LOADING ===== 
-function setupVideoLazyLoading() {
-    const videos = document.querySelectorAll('video[preload="metadata"]');
-    
-    const videoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const video = entry.target;
-                video.preload = 'auto';
-                videoObserver.unobserve(video);
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
 
-    videos.forEach(video => {
-        videoObserver.observe(video);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', setupVideoLazyLoading);
 
 // ===== PERFORMANCE OPTIMIZATIONS ===== 
 
@@ -199,7 +178,7 @@ function setupAccessibility() {
     }
     
     // Add keyboard support for cards
-    const interactiveCards = document.querySelectorAll('.trabalho__card, .criativo__item, .servico__card');
+    const interactiveCards = document.querySelectorAll('.behance__project, .servico__card');
     
     interactiveCards.forEach(card => {
         card.setAttribute('tabindex', '0');
@@ -366,4 +345,235 @@ function setupCTATracking() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', setupCTATracking); 
+document.addEventListener('DOMContentLoaded', setupCTATracking);
+
+// ===== BEHANCE TRACKING ===== 
+function setupBehanceTracking() {
+    // Track "Ver Todos" button click
+    const verTodosBtn = document.querySelector('.trabalhos__ver-todos .btn');
+    
+    if (verTodosBtn) {
+        verTodosBtn.addEventListener('click', () => {
+            console.log('Behance "Ver Todos" clicked');
+            // analytics.track('behance_view_all_click', { 
+            //     destination: 'behance.net/celiomoreiradesign' 
+            // });
+        });
+    }
+    
+    // Track iframe interactions (when available)
+    const behanceIframes = document.querySelectorAll('.behance__iframe');
+    
+    behanceIframes.forEach((iframe, index) => {
+        const project = iframe.closest('.behance__project');
+        
+        if (project) {
+            project.addEventListener('mouseenter', () => {
+                console.log(`Behance project ${index + 1} hovered`);
+                // analytics.track('behance_project_hover', { 
+                //     project_index: index + 1 
+                // });
+            });
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupBehanceTracking);
+
+// ===== INSTAGRAM VIDEOS TRACKING ===== 
+function setupInstagramTracking() {
+    const videoItems = document.querySelectorAll('.video__item');
+    
+    videoItems.forEach((item, index) => {
+        item.addEventListener('mouseenter', () => {
+            console.log(`Instagram video ${index + 1} hovered`);
+            // analytics.track('instagram_video_hover', { 
+            //     video_index: index + 1 
+            // });
+        });
+        
+        // Track when Instagram embed is clicked (if possible)
+        const instagramEmbed = item.querySelector('.instagram-media');
+        if (instagramEmbed) {
+            instagramEmbed.addEventListener('click', () => {
+                console.log(`Instagram video ${index + 1} clicked`);
+                // analytics.track('instagram_video_click', { 
+                //     video_index: index + 1 
+                // });
+            });
+        }
+    });
+}
+
+// Initialize Instagram tracking after embeds load
+function initInstagramEmbeds() {
+    // Wait for Instagram embeds to load
+    setTimeout(() => {
+        setupInstagramTracking();
+    }, 2000);
+    
+    // Also setup tracking when Instagram script loads
+    if (window.instgrm) {
+        window.instgrm.Embeds.process();
+        setupInstagramTracking();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initInstagramEmbeds);
+
+// ===== MENTORIA CAROUSEL ===== 
+function setupMentoriaCarousel() {
+    const carousel = document.getElementById('mentoria-carousel');
+    const slides = document.querySelectorAll('.mentoria__slide');
+    const dots = document.querySelectorAll('.carousel__dot');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    
+    if (!carousel || slides.length === 0) return;
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+    let isPaused = false;
+    
+    function updateSlide(newIndex) {
+        // Remove active class from current slide and dot
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide]?.classList.remove('active');
+        
+        // Update current slide index
+        currentSlide = newIndex;
+        
+        // Add active class to new slide and dot
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide]?.classList.add('active');
+        
+        // Track slide view
+        console.log(`Mentoria slide ${currentSlide + 1} viewed`);
+    }
+    
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        updateSlide(nextIndex);
+    }
+    
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlide(prevIndex);
+    }
+    
+    function startAutoSlide() {
+        if (!isPaused) {
+            autoSlideInterval = setInterval(nextSlide, 6000); // 6 seconds
+        }
+    }
+    
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+    
+    function pauseAutoSlide() {
+        isPaused = true;
+        stopAutoSlide();
+    }
+    
+    function resumeAutoSlide() {
+        isPaused = false;
+        startAutoSlide();
+    }
+    
+    // Event listeners
+    nextBtn?.addEventListener('click', () => {
+        nextSlide();
+        pauseAutoSlide();
+        setTimeout(resumeAutoSlide, 12000); // Resume after 12 seconds
+    });
+    
+    prevBtn?.addEventListener('click', () => {
+        prevSlide();
+        pauseAutoSlide();
+        setTimeout(resumeAutoSlide, 12000); // Resume after 12 seconds
+    });
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            updateSlide(index);
+            pauseAutoSlide();
+            setTimeout(resumeAutoSlide, 12000); // Resume after 12 seconds
+        });
+    });
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', pauseAutoSlide);
+    carousel.addEventListener('mouseleave', resumeAutoSlide);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            pauseAutoSlide();
+            setTimeout(resumeAutoSlide, 12000);
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            pauseAutoSlide();
+            setTimeout(resumeAutoSlide, 12000);
+        }
+    });
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextSlide(); // Swipe left, go to next
+            } else {
+                prevSlide(); // Swipe right, go to previous
+            }
+            pauseAutoSlide();
+            setTimeout(resumeAutoSlide, 12000);
+        }
+    }
+    
+    // Initialize auto-slide
+    startAutoSlide();
+    
+    // Pause when page is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            pauseAutoSlide();
+        } else {
+            resumeAutoSlide();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupMentoriaCarousel);
+
+// ===== PRELOAD CAROUSEL IMAGES ===== 
+function preloadCarouselImages() {
+    const slideImages = document.querySelectorAll('.mentoria__image');
+    
+    slideImages.forEach((img, index) => {
+        if (index > 0) { // Skip first image as it's already loading
+            const preloadImg = new Image();
+            preloadImg.src = img.src;
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', preloadCarouselImages); 
