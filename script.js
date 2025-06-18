@@ -347,39 +347,6 @@ function setupCTATracking() {
 
 document.addEventListener('DOMContentLoaded', setupCTATracking);
 
-// ===== BEHANCE TRACKING ===== 
-function setupBehanceTracking() {
-    // Track "Ver Todos" button click
-    const verTodosBtn = document.querySelector('.trabalhos__ver-todos .btn');
-    
-    if (verTodosBtn) {
-        verTodosBtn.addEventListener('click', () => {
-            console.log('Behance "Ver Todos" clicked');
-            // analytics.track('behance_view_all_click', { 
-            //     destination: 'behance.net/celiomoreiradesign' 
-            // });
-        });
-    }
-    
-    // Track iframe interactions (when available)
-    const behanceIframes = document.querySelectorAll('.behance__iframe');
-    
-    behanceIframes.forEach((iframe, index) => {
-        const project = iframe.closest('.behance__project');
-        
-        if (project) {
-            project.addEventListener('mouseenter', () => {
-                console.log(`Behance project ${index + 1} hovered`);
-                // analytics.track('behance_project_hover', { 
-                //     project_index: index + 1 
-                // });
-            });
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', setupBehanceTracking);
-
 // ===== INSTAGRAM VIDEOS TRACKING ===== 
 function setupInstagramTracking() {
     const videoItems = document.querySelectorAll('.video__item');
@@ -576,4 +543,4 @@ function preloadCarouselImages() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', preloadCarouselImages); 
+document.addEventListener('DOMContentLoaded', preloadCarouselImages);

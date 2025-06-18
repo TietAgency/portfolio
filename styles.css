@@ -549,8 +549,6 @@ ul {
     transform: translateX(4px);
 }
 
-
-
 /* ===== SERVIÇOS ===== */
 .servicos__grid {
     display: grid;
@@ -1124,4 +1122,4 @@ ul {
         -webkit-text-fill-color: initial;
         color: black !important;
     }
-} 
+}
