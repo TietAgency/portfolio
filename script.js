@@ -347,47 +347,6 @@ function setupCTATracking() {
 
 document.addEventListener('DOMContentLoaded', setupCTATracking);
 
-// ===== INSTAGRAM VIDEOS TRACKING ===== 
-function setupInstagramTracking() {
-    const videoItems = document.querySelectorAll('.video__item');
-    
-    videoItems.forEach((item, index) => {
-        item.addEventListener('mouseenter', () => {
-            console.log(`Instagram video ${index + 1} hovered`);
-            // analytics.track('instagram_video_hover', { 
-            //     video_index: index + 1 
-            // });
-        });
-        
-        // Track when Instagram embed is clicked (if possible)
-        const instagramEmbed = item.querySelector('.instagram-media');
-        if (instagramEmbed) {
-            instagramEmbed.addEventListener('click', () => {
-                console.log(`Instagram video ${index + 1} clicked`);
-                // analytics.track('instagram_video_click', { 
-                //     video_index: index + 1 
-                // });
-            });
-        }
-    });
-}
-
-// Initialize Instagram tracking after embeds load
-function initInstagramEmbeds() {
-    // Wait for Instagram embeds to load
-    setTimeout(() => {
-        setupInstagramTracking();
-    }, 2000);
-    
-    // Also setup tracking when Instagram script loads
-    if (window.instgrm) {
-        window.instgrm.Embeds.process();
-        setupInstagramTracking();
-    }
-}
-
-document.addEventListener('DOMContentLoaded', initInstagramEmbeds);
-
 // ===== MENTORIA CAROUSEL ===== 
 function setupMentoriaCarousel() {
     const carousel = document.getElementById('mentoria-carousel');
@@ -543,4 +502,4 @@ function preloadCarouselImages() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', preloadCarouselImages);
+document.addEventListener('DOMContentLoaded', preloadCarouselImages); 

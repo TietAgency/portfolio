@@ -323,9 +323,9 @@ ul {
 /* ===== CLIENTES ===== */
 .clientes__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-lg);
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -335,6 +335,7 @@ ul {
     border-radius: var(--radius-md);
     transition: all var(--transition-normal);
     overflow: hidden;
+    min-height: 70px;
 }
 
 .cliente__item:hover {
@@ -346,7 +347,7 @@ ul {
 
 .cliente__link {
     display: block;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     text-decoration: none;
     color: inherit;
     height: 100%;
@@ -358,14 +359,14 @@ ul {
 
 .cliente__name {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--color-primary);
     display: block;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0.2rem;
 }
 
 .cliente__category {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: var(--color-gray-light);
     font-weight: 400;
     text-transform: uppercase;
@@ -508,22 +509,22 @@ ul {
     transition: all var(--transition-normal);
     border: 1px solid rgba(255, 215, 0, 0.1);
     padding: var(--spacing-sm);
-}
-
-.behance__project:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(255, 215, 0, 0.3);
-}
-
-.behance__iframe {
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 316px;
+}
+
+.behance__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: var(--radius-md);
+    display: block;
     transition: transform var(--transition-normal);
 }
 
-.behance__project:hover .behance__iframe {
+.behance__project:hover .behance__img {
     transform: scale(1.02);
 }
 
@@ -552,7 +553,7 @@ ul {
 /* ===== SERVIÇOS ===== */
 .servicos__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-lg);
 }
 
@@ -643,58 +644,6 @@ ul {
     left: 0;
     color: var(--color-primary);
     font-weight: bold;
-}
-
-/* ===== SERVIÇOS VÍDEOS ===== */
-.servicos__videos {
-    margin-top: var(--spacing-xxl);
-    padding-top: var(--spacing-xxl);
-    border-top: 1px solid rgba(255, 215, 0, 0.2);
-}
-
-.servicos__videos-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-}
-
-.servicos__videos-subtitle {
-    font-size: 1.1rem;
-    color: var(--color-gray-light);
-    text-align: center;
-    margin-bottom: var(--spacing-xl);
-}
-
-.videos__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--spacing-lg);
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.video__item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
-}
-
-.instagram-media {
-    border-radius: var(--radius-md) !important;
-    box-shadow: var(--shadow-md) !important;
-    transition: transform var(--transition-normal) !important;
-}
-
-.video__item:hover .instagram-media {
-    transform: translateY(-4px) !important;
-    box-shadow: var(--shadow-lg) !important;
 }
 
 /* ===== FOOTER ===== */
@@ -1082,6 +1031,18 @@ ul {
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .servicos__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .servicos__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== PERFORMANCE OPTIMIZATIONS ===== */
 .hero__img {
     will-change: transform;
@@ -1122,4 +1083,4 @@ ul {
         -webkit-text-fill-color: initial;
         color: black !important;
     }
-}
+} 
