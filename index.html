@@ -226,6 +226,15 @@
                 <div class="behance__project">
                     <img src="img/behance3.jpg" alt="Projeto Behance 3" class="behance__img" loading="lazy">
                 </div>
+                <div class="behance__project behance__project--video">
+                    <video class="behance__video" data-src="img/audi.mp4" controls playsinline preload="none" poster="img/audi.webp" style="aspect-ratio:9/16;"></video>
+                </div>
+                <div class="behance__project behance__project--video">
+                    <video class="behance__video" data-src="img/bmw.mp4" controls playsinline preload="none" poster="img/bmw.webp" style="aspect-ratio:9/16;"></video>
+                </div>
+                <div class="behance__project behance__project--video">
+                    <video class="behance__video" data-src="img/mentoria.mp4" controls playsinline preload="none" poster="img/mentoria (3).jpeg" style="aspect-ratio:9/16;"></video>
+                </div>
             </div>
             
             <div class="section__cta">
@@ -428,6 +437,20 @@
 
     <!-- Scripts -->
     <script src="script.js"></script>
+    <script>
+      // Lazy load dos vídeos 9:16 - corrigido para funcionar em todos navegadores
+      document.querySelectorAll('.behance__video').forEach(function(video) {
+        let loaded = false;
+        video.addEventListener('click', function handler() {
+          if (!loaded) {
+            video.src = video.getAttribute('data-src');
+            video.load();
+            video.play();
+            loaded = true;
+          }
+        });
+      });
+    </script>
     
     <!-- Instagram Embed Script -->
     <script async src="//www.instagram.com/embed.js"></script>

@@ -550,6 +550,60 @@ ul {
     transform: translateX(4px);
 }
 
+/* ===== BEHANCE VÍDEOS 9:16 ===== */
+.behance__project--video {
+    background: var(--color-gray-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    height: 316px;
+    min-width: 180px;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.behance__project--video:hover {
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.02);
+}
+
+.behance__video {
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+    aspect-ratio: 9/16;
+    border-radius: var(--radius-md);
+    background: #000;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    object-fit: cover;
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .behance__project--video {
+        height: 400px;
+        min-width: 120px;
+    }
+    .behance__video {
+        max-width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .behance__project--video {
+        height: 320px;
+        min-width: 80px;
+    }
+    .behance__video {
+        max-width: 100%;
+        height: 100%;
+    }
+}
+
 /* ===== SERVIÇOS ===== */
 .servicos__grid {
     display: grid;
@@ -1083,4 +1137,4 @@ ul {
         -webkit-text-fill-color: initial;
         color: black !important;
     }
-} 
+}
